@@ -12,7 +12,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('telegram:send-daily-message')->dailyAt('11:00');
+        $schedule->command('telegram:send-daily-message')
+            ->dailyAt('11:00')
+            ->when(function () {
+                return now()->dayOfWeek !== 0;
+            });
+
     }
 
     /**
